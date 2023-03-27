@@ -85,7 +85,7 @@
     "json-2-csv": "^3.20.0",
     "lodash": "^4.17.21",
     "node-notifier": "^10.0.1",
-    "open": "^8.4.2",
+    "open": "^9.1.0",
     "tslib": "^2.5.0"
   },
   "publishConfig": {
