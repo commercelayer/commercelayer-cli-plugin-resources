@@ -81,7 +81,7 @@
     "@commercelayer/sdk": "^4.27.0",
     "@oclif/core": "^2.7.1",
     "axios": "^1.3.4",
-    "inquirer": "^8.2.5",
+    "inquirer": "^9.1.5",
     "json-2-csv": "^3.20.0",
     "lodash": "^4.17.21",
     "node-notifier": "^10.0.1",
