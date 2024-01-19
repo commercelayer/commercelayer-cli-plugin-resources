@@ -80,7 +80,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@commercelayer/cli-core": "^4.11.0",
+    "@commercelayer/cli-core": "^4.11.2",
     "@commercelayer/sdk": "^5.28.0",
     "@oclif/core": "^2.15.0",
     "axios": "^1.6.5",
