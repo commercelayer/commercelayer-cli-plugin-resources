@@ -4,6 +4,7 @@ import { clApi, clToken, clColor, clUtil, clCommand, clConfig } from '@commercel
 import type { CommerceLayerClient, QueryParamsList, ListResponse, Resource, QueryPageSize } from '@commercelayer/sdk'
 import type { ArgOutput, FlagOutput, Input } from '@oclif/core/lib/interfaces/parser'
 import notifier from 'node-notifier'
+import  cliProgress from 'cli-progress'
 
 
 // const maxPagesWarning = 1000
@@ -135,7 +136,7 @@ export default class ResourcesAll extends Command {
 
     if (((jwtData.exp - securityInterval) * 1000) <= Date.now()) {
 
-      await cliux.wait((securityInterval + 1) * 1000)
+      await clUtil.sleep((securityInterval + 1) * 1000)
 
       const organization = flags.organization
       const domain = flags.domain
@@ -222,7 +223,7 @@ export default class ResourcesAll extends Command {
 
       const itemsDesc = resource.api.replace(/_/g, ' ')
 
-      const progressBar = blindMode ? blindProgressBar : cliux.progress({
+      const progressBar = blindMode ? blindProgressBar : new cliProgress.SingleBar({
         format: `Fetching ${itemsDesc} ... | ${clColor.greenBright('{bar}')} | ${clColor.yellowBright('{percentage}%')} | {value}/{total} | {duration_formatted} | {eta_formatted}`,
         barCompleteChar: '\u2588',
         barIncompleteChar: '\u2591',
