@@ -1,3 +1,15 @@
+# [6.6.0-beta.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.5.2...v6.6.0-beta.1) (2024-08-21)
+
+
+### Bug Fixes
+
+* fix cliux ([00aaf18](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/00aaf18e7e967461f25b597a532eb2fd3a6ab170))
+
+
+### Features
+
+* migrate to oclif/core vd and oclif/test v4 ([1b67f6b](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/1b67f6b6e0ced37be016df9d009fbf59d018a1c8))
+
 ## [6.5.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.5.1...v6.5.2) (2024-07-17)
 
 
