@@ -1,7 +1,8 @@
-import { Command, Flags, ux as cliux } from '@oclif/core'
+import { Command, Flags } from '@oclif/core'
 import { resourceList } from '../../util/resources'
 import { clUtil, clColor, clConfig } from '@commercelayer/cli-core'
 import type { CommandError } from '@oclif/core/lib/interfaces'
+import cliux from '@commercelayer/cli-ux'
 
 
 export default class ResourcesIndex extends Command {

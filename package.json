@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@commercelayer/cli-core": "beta",
+    "@commercelayer/cli-ux": "^1.0.1",
     "@commercelayer/sdk": "^6.13.0",
     "@oclif/core": "4.0.17",
     "cli-progress": "^3.12.0",

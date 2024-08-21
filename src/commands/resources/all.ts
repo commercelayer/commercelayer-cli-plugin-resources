@@ -1,10 +1,11 @@
 
-import Command, { Flags, cliux } from '../../base'
+import Command, { Flags } from '../../base'
 import { clApi, clToken, clColor, clUtil, clCommand, clConfig } from '@commercelayer/cli-core'
 import type { CommerceLayerClient, QueryParamsList, ListResponse, Resource, QueryPageSize } from '@commercelayer/sdk'
 import type { ArgOutput, FlagOutput, Input } from '@oclif/core/lib/interfaces/parser'
 import notifier from 'node-notifier'
 import  cliProgress from 'cli-progress'
+import cliux from '@commercelayer/cli-ux'
 
 
 // const maxPagesWarning = 1000
