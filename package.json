@@ -68,7 +68,7 @@
     "@types/cli-progress": "^3.11.6",
     "@types/inquirer": "^8.2.10",
     "@types/mocha": "^10.0.7",
-    "@types/node": "^22.4.1",
+    "@types/node": "^22.4.2",
     "@types/node-notifier": "^8.0.5",
     "chai": "^4.5.0",
     "eslint": "^8.57.0",
@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "@commercelayer/cli-core": "beta",
-    "@commercelayer/cli-ux": "^1.0.1",
+    "@commercelayer/cli-ux": "^1.0.2",
     "@commercelayer/sdk": "^6.13.0",
     "@oclif/core": "4.0.17",
     "cli-progress": "^3.12.0",
