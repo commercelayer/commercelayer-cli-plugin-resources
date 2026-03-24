@@ -1,11 +1,10 @@
 import { existsSync } from 'node:fs'
 import type { KeyVal, KeyValArray, KeyValObj, KeyValRel, KeyValSort, KeyValString, ResAttributes } from '@commercelayer/cli-core'
 import { clColor, clCommand, clConfig, clFilter, clText, clToken, clUpdate, clUtil } from '@commercelayer/cli-core'
-import * as cliux from '@commercelayer/cli-ux'
+import cliux from '@commercelayer/cli-ux'
 import type { CommerceLayerClient, QueryParams, QueryParamsRetrieve, ResourceId, ResourceType, ResourceTypeLock } from '@commercelayer/sdk'
 import commercelayer, { CommerceLayerStatic } from '@commercelayer/sdk'
-import { Args, Command, type Config, Flags } from '@oclif/core'
-import type { CommandError } from '@oclif/core/lib/interfaces'
+import { Args, Command, type Config, Flags, type Interfaces } from '@oclif/core'
 import { aliasExists, type CommandParams, checkAlias, loadCommandData, type ResourceOperation, saveCommandData } from './commands'
 import { exportCsv } from './csv'
 import { availableLanguages, buildCommand, getLanguageArg, languageInfo, promptLanguage, type RequestData } from './lang'
@@ -258,7 +257,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
         { suggestions: [`Execute command ${clColor.style.command('resources')} to get a list of all available CLI resources`] }
       )
     // else throw error				// overwrite command catch method
-    else return await super.catch(error as CommandError)	// extend command catch method
+    else return await super.catch(error as Interfaces.CommandError)	// extend command catch method
   }
 
 

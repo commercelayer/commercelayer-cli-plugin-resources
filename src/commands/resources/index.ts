@@ -1,6 +1,6 @@
 import { clColor, clConfig, clUtil } from '@commercelayer/cli-core'
 import cliux from '@commercelayer/cli-ux'
-import { Command, Flags, Interfaces } from '@oclif/core'
+import { Command, Flags, type Interfaces } from '@oclif/core'
 import { resourceList } from '../../util/resources'
 
 
