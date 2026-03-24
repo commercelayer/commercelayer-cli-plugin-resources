@@ -1,6 +1,6 @@
 import Command from '../../base'
-import RetrieveCommand from './retrieve'
 import ListCommand from './list'
+import RetrieveCommand from './retrieve'
 
 
 export default class ResourcesGet extends Command {
@@ -13,17 +13,17 @@ export default class ResourcesGet extends Command {
     '$ commercelayer resources:get customers',
     '$ commercelayer res:get customers',
     '$ clayer res:get customers/<customerId>',
-    '$ cl get customers <customerId>',
+    '$ cl get customers <customerId>'
   ]
 
   static strict = false
 
   static flags = {
-    ...ListCommand.flags,
+    ...ListCommand.flags
   }
 
   static args = {
-    ...RetrieveCommand.args,
+    ...RetrieveCommand.args
   }
 
 

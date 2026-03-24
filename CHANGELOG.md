@@ -1,3 +1,314 @@
+# [6.16.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.15.0...v6.16.0) (2026-03-18)
+
+
+### Features
+
+* add resources documentation hyperlink ([e949cf3](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/e949cf3e732b60c4861c7a790215a50e8d2dac94))
+
+# [6.15.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.8...v6.15.0) (2026-03-18)
+
+
+### Bug Fixes
+
+* revert hyperlink function ([a7b2704](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/a7b27041e64e9bbe07c8fedf913f7fd0713d4b96))
+
+
+### Features
+
+* add hyperlink function ([ebe3eee](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/ebe3eeed7fe661367eb880b61d2e95e5e6da2d80))
+
+## [6.14.8](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.7...v6.14.8) (2026-03-13)
+
+
+### Bug Fixes
+
+* update dependencies ([245ca91](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/245ca91782c289c36ba067a257c49689970b413a))
+
+## [6.14.7](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.6...v6.14.7) (2026-03-10)
+
+
+### Bug Fixes
+
+* update dependencies ([8368422](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/836842268114150a02737d38dcd000fa4f0c7c07))
+
+## [6.14.6](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.5...v6.14.6) (2026-03-02)
+
+
+### Bug Fixes
+
+* updatecli-core to latest version ([137ae81](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/137ae81b8754163eac14856d59bab66fb4f03fe6))
+
+## [6.14.5](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.4...v6.14.5) (2026-03-02)
+
+
+### Bug Fixes
+
+* update dependencies ([defe002](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/defe002589887776497c1a78e5e29274f76c7215))
+
+## [6.14.4](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.3...v6.14.4) (2026-02-06)
+
+
+### Bug Fixes
+
+* fix relationship resource type check ([d37be66](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/d37be6682031593f66c2a088a430498e1d1644fc))
+
+## [6.14.3](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.2...v6.14.3) (2025-12-10)
+
+
+### Bug Fixes
+
+* fix count timeout ([35e7d83](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/35e7d833939666d70a4905512e447fe5924479a5))
+
+## [6.14.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.1...v6.14.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* update dependencies ([6cc834f](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/6cc834fcc2ae2c98fa35ed3bcddcb44666f6bd7f))
+
+## [6.14.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.14.0...v6.14.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* fix list help and update dependencies ([c4d09de](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/c4d09de99394961fff1e32505ca810c7bc14d3e0))
+
+# [6.14.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.7...v6.14.0) (2025-10-13)
+
+
+### Features
+
+* update resources ([9899596](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/9899596959700086e536d8971feb93410e5cb53b))
+
+## [6.13.7](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.6...v6.13.7) (2025-09-19)
+
+
+### Bug Fixes
+
+* update dependencies ([1617211](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/1617211cbe150d9aca9a7e2f8a7bc5e5a8e162f0))
+
+## [6.13.6](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.5...v6.13.6) (2025-08-18)
+
+
+### Bug Fixes
+
+* update dependencies ([b5bb5bb](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/b5bb5bbdd0945d008570ac96812d33396686c834))
+
+## [6.13.5](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.4...v6.13.5) (2025-07-23)
+
+
+### Bug Fixes
+
+* fix codeql action ([769d101](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/769d101e29be231a39932ae0ad43bfc7aa910823))
+
+## [6.13.4](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.3...v6.13.4) (2025-07-23)
+
+
+### Bug Fixes
+
+* fix release script ([15c3091](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/15c3091b86e143b272256076afdfd7c704e6247f))
+
+## [6.13.3](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.2...v6.13.3) (2025-07-23)
+
+
+### Bug Fixes
+
+* fix vulnerability issues ([81eccbe](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/81eccbefbf4dc31d4c4c0000e0ddce337d731ffa))
+
+## [6.13.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.1...v6.13.2) (2025-06-09)
+
+
+### Bug Fixes
+
+* update resources and dependencies ([eba7d55](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/eba7d551e7adcd91009b80e1ed417b05bf357653))
+
+## [6.13.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.13.0...v6.13.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* update dependencies and resources ([ae60047](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/ae60047d9fbca8d834e1c38f59f7e6663357f5a6))
+
+# [6.13.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.12.3...v6.13.0) (2025-04-01)
+
+
+### Bug Fixes
+
+* fix sdk dependency ([6943eaa](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/6943eaa09940a426b66ddeeebe635ef57745fdc1))
+
+
+### Features
+
+* update commercelayer sdk ([d04a281](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/d04a2815768fa06a4316416e59de1d13bea4b7c7))
+
+## [6.12.3](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.12.2...v6.12.3) (2025-03-31)
+
+
+### Bug Fixes
+
+* update dependencies ([9a490bc](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/9a490bc5789332517dc88a22b0633270d18ee808))
+
+## [6.12.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.12.1...v6.12.2) (2025-02-28)
+
+
+### Bug Fixes
+
+* fix last command ([b0c5190](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/b0c51900f540a9a3a7101634740950f21c0dd3ad))
+
+## [6.12.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.12.0...v6.12.1) (2025-02-28)
+
+
+### Bug Fixes
+
+* fix last command ([38d9b0d](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/38d9b0d6def4c235265f0f444d94fd5aac47b216))
+
+# [6.12.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.11.2...v6.12.0) (2025-02-27)
+
+
+### Bug Fixes
+
+* update dependencies ([d8f8099](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/d8f80994655210d2b27ace6e327f9a523cf689f5))
+
+
+### Features
+
+* add history command ([a6ee3cb](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/a6ee3cb5d509645baea3b94f2e3ffbcf0db2b355))
+
+## [6.11.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.11.1...v6.11.2) (2025-02-26)
+
+
+### Bug Fixes
+
+* update readme ([f28851d](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/f28851d56d360d357f4d8f35d01bf9d1c05448f5))
+
+## [6.11.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.11.0...v6.11.1) (2025-01-31)
+
+
+### Bug Fixes
+
+* update readme and dependencies ([66c39c1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/66c39c1edb5a0c0846b3e10b66af63364b4b0f5e))
+
+# [6.11.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.10.0...v6.11.0) (2025-01-31)
+
+
+### Features
+
+* add multi delete operation ([c56a1d5](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/c56a1d5e16947d78e69b1bf577c17c8ceaa405e1))
+
+# [6.10.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.9.0...v6.10.0) (2025-01-29)
+
+
+### Features
+
+* add support for full json objects ([58a22b8](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/58a22b877c1d8cb957eadededd8d770222f63229))
+* add support for object fields in dot notation ([b5d8dc9](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/b5d8dc9eec9941d30f967709682fc07344e4515e))
+
+# [6.9.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.8.1...v6.9.0) (2024-12-11)
+
+
+### Features
+
+* update resource types ([84827f9](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/84827f982db15f02056fe9d31756937d040cda72))
+
+## [6.8.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.8.0...v6.8.1) (2024-11-26)
+
+
+### Bug Fixes
+
+* fix fields filter issue ([5c8d71a](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/5c8d71a72883ae3025c32a317214a7288c5fbb7a))
+* fix resource types ([b438461](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/b438461638b720952128e1c8d83d8149094b5b0a))
+
+# [6.8.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.6...v6.8.0) (2024-11-06)
+
+
+### Features
+
+* add support for stores resource type ([5f8b97d](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/5f8b97d494469bdea1a9e757c5bf8f80828a8d1e))
+
+## [6.7.6](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.5...v6.7.6) (2024-10-28)
+
+
+### Bug Fixes
+
+* update dependencies ([c06e390](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/c06e3900aa2d7c2900ff5aedee98cab1e6355182))
+
+## [6.7.5](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.4...v6.7.5) (2024-10-21)
+
+
+### Bug Fixes
+
+* fix security issue ([454392e](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/454392ebe8a90d86fda8561bc102b82516e24e62))
+
+## [6.7.4](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.3...v6.7.4) (2024-10-10)
+
+
+### Bug Fixes
+
+* fix doc resource name finder ([264c6a8](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/264c6a8202261a3178eb72a80466db8eb5fe1326))
+
+## [6.7.3](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.2...v6.7.3) (2024-10-10)
+
+
+### Bug Fixes
+
+* fix doc command node ([3732a17](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/3732a17d86b17c71a61118f520c305997644992b))
+
+## [6.7.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.1...v6.7.2) (2024-10-10)
+
+
+### Bug Fixes
+
+* fix curl command generation ([aba10ab](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/aba10abf8528d90c27a99a323449fb7acee67c49))
+
+## [6.7.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.7.0...v6.7.1) (2024-10-02)
+
+
+### Bug Fixes
+
+* update dependencies ([71af531](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/71af53107c87e3449e977c5e7529e44dfb50d8e6))
+
+# [6.7.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.6.4...v6.7.0) (2024-09-19)
+
+
+### Features
+
+* update sdk and resources ([15bf630](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/15bf63077facedce1c17e246722b4e1c9bbc8a4c))
+
+## [6.6.4](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.6.3...v6.6.4) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix update with flag --data ([08cc8bf](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/08cc8bf99fa018d2151ae3aa910e52cda45f2062))
+
+## [6.6.3](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.6.2...v6.6.3) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix update command log ([0aaedf5](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/0aaedf5bfb5ecb6d3ba9fce0b9b13dbe2ef7ad75))
+
+## [6.6.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.6.1...v6.6.2) (2024-09-10)
+
+
+### Bug Fixes
+
+* fix update and create with external file ([2189053](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/2189053f85cef35711c3730f2ac1ef2936cbe7e1))
+
+## [6.6.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.6.0...v6.6.1) (2024-08-26)
+
+
+### Bug Fixes
+
+* **all:** fix timeout ([2699d8d](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/2699d8daf24efd9c77539a7b9a3cce1956a64b0b))
+
+# [6.6.0](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.5.2...v6.6.0) (2024-08-23)
+
+
+### Features
+
+* remove oclif ux and update sdk ([1e93dea](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/1e93deace920ab67a4f0f707003ba1de7cba23aa))
+
 ## [6.5.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.5.1...v6.5.2) (2024-07-17)
 
 

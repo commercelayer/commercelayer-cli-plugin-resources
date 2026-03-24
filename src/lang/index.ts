@@ -1,21 +1,21 @@
 import type { QueryParams } from '@commercelayer/sdk'
+import inquirer from 'inquirer'
 import { buildCurl } from './curl'
+import { buildTypescript } from './node'
 import type { RequestData } from './request'
 import { buildRuby } from './ruby'
-import { buildTypescript } from './node'
-import inquirer from 'inquirer'
 
-export { isRequestInterrupted } from './request'
 
 
 export * from './request'
+export { isRequestInterrupted } from './request'
 
 
 export const availableLanguages = ['curl', 'node']
 
 export const languageInfo = {
 	curl: { name: 'cURL', label: 'cURL command' },
-	node: { name: 'Node', label: 'Node SDK source code' },
+	node: { name: 'Node', label: 'Node SDK source code' }
 }
 
 
@@ -55,4 +55,4 @@ const promptLanguage = async (): Promise<string> => {
 }
 
 
-export { getLanguageArg, buildCommand, promptLanguage }
+export { buildCommand, getLanguageArg, promptLanguage }

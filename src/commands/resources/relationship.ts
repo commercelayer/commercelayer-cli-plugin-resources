@@ -1,9 +1,9 @@
-import Command, { Args, cliux, FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS } from '../../base'
-import type { CommerceLayerClient, QueryParamsList, QueryPageSize } from '@commercelayer/sdk'
-import { addRequestReader, isRequestInterrupted } from '../../lang'
-import { mergeCommandParams } from '../../commands'
-import ResourcesList from './list'
 import { clColor, clText } from '@commercelayer/cli-core'
+import type { CommerceLayerClient, QueryPageSize, QueryParamsList } from '@commercelayer/sdk'
+import Command, { Args, cliux, FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS } from '../../base'
+import { mergeCommandParams } from '../../commands'
+import { addRequestReader, isRequestInterrupted } from '../../lang'
+import ResourcesList from './list'
 
 
 const OPERATION = 'relationship'
@@ -21,17 +21,17 @@ export default class ResourcesRelationship extends Command {
     '$ commercelayer resources:relationship customers <customerId> customer_group',
     '$ clayer res:relationship customers <customerId> orders',
     '$ cl res:rel customers <customerId> orders -w status_eq=pending',
-    '$ cl relationship customers <customerId> <customerRelationship>',
+    '$ cl relationship customers <customerId> <customerRelationship>'
   ]
 
   static flags = {
-    ...ResourcesList.flags,
+    ...ResourcesList.flags
   }
 
   static args = {
     ...Command.args,
     id: Args.string({ name: 'id', description: 'id of the resource to retrieve', required: true }),
-    relationship: Args.string({ name: 'relationship', description: 'name of the relationship field', required: true }),
+    relationship: Args.string({ name: 'relationship', description: 'name of the relationship field', required: true })
   }
 
 
@@ -115,7 +115,7 @@ export default class ResourcesRelationship extends Command {
 
 
       // Save command arguments
-      if (saveCmd) this.saveParams(saveCmd, { type: resource.api, id }, OPERATION, params)
+      if (saveCmd) this.saveParams(saveCmd, { type: resource.type, id }, OPERATION, params)
 
 
       return out

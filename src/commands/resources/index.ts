@@ -1,8 +1,8 @@
-import { Command, Flags } from '@oclif/core'
-import { resourceList } from '../../util/resources'
-import { clUtil, clColor, clConfig } from '@commercelayer/cli-core'
-import type { CommandError } from '@oclif/core/lib/interfaces'
+import { clColor, clConfig, clUtil } from '@commercelayer/cli-core'
 import cliux from '@commercelayer/cli-ux'
+import { Command, Flags, Interfaces } from '@oclif/core'
+import { resourceList } from '../../util/resources'
+
 
 
 export default class ResourcesIndex extends Command {
@@ -13,11 +13,11 @@ export default class ResourcesIndex extends Command {
 		'$ cl-resources resources',
 		'$ cl-res resources',
 		'$ commercelayer resources',
-		'$ cl resources',
+		'$ cl resources'
 	]
 
 	static flags = {
-		help: Flags.help({ char: 'h' }),
+		help: Flags.help({ char: 'h' })
 	}
 
 
@@ -34,7 +34,7 @@ export default class ResourcesIndex extends Command {
 
 		cliux.Table.table(resourceArray, {
 				key: { header: 'NAME', minWidth: 35, get: row => clColor.blueBright(row.name) },
-				description: { header: 'ONLINE DOCUMENTATION URL', get: row => row.url },
+				description: { header: 'ONLINE DOCUMENTATION URL', get: row => cliux.hyperlink(row.url, row.url) },
 			}, {
 				printLine: clUtil.log,
 			})
@@ -45,7 +45,7 @@ export default class ResourcesIndex extends Command {
 
 	async catch(error: any): Promise<any> {
 		if ((error.code === 'EEXIT') && (error.message === 'EEXIT: 0')) return
-		return await super.catch(error as CommandError)
+		return await super.catch(error as Interfaces.CommandError)
 	}
 
 }

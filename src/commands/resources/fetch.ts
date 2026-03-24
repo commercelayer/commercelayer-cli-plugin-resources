@@ -1,8 +1,8 @@
-import { BaseQueryCommand, Args } from '../../base'
-import RetrieveCommand from './retrieve'
+import { Args, BaseQueryCommand } from '../../base'
+import GetCommand from './get'
 import ListCommand from './list'
 import RelationshipCommand from './relationship'
-import GetCommand from './get'
+import RetrieveCommand from './retrieve'
 
 
 export default class ResourcesFetch extends BaseQueryCommand {
@@ -16,19 +16,20 @@ export default class ResourcesFetch extends BaseQueryCommand {
     '$ commercelayer res:fetch customers',
     '$ clayer res:fetch customers/<customerId>',
     '$ cl fetch customers/<customerId>/<customerRelationship>',
-    '$ cl fetch customers/{customerId}/orders aBcdEkYWx',
+    '$ cl fetch customers/{customerId}/orders aBcdEkYWx'
   ]
 
   static strict = false
 
   static flags = {
     ...RetrieveCommand.flags,
-    ...ListCommand.flags,
+    ...ListCommand.flags
   }
 
   static args = {
+    ...BaseQueryCommand.args,
     path: Args.string({ name: 'path', description: 'path (or URL) of the resource(s) to fetch', required: true }),
-    id: Args.string({ name: 'id', description: 'resource id', required: false }),
+    id: Args.string({ name: 'id', description: 'resource id', required: false })
   }
 
 

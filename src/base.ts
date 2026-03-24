@@ -1,16 +1,17 @@
-import { Command, Flags, Args, type Config, ux as cliux } from '@oclif/core'
-import { findResource, type ApiResource } from './util/resources'
-import { formatOutput, exportOutput } from './output'
-import { exportCsv } from './csv'
 import { existsSync } from 'node:fs'
+import type { KeyVal, KeyValArray, KeyValObj, KeyValRel, KeyValSort, KeyValString, ResAttributes } from '@commercelayer/cli-core'
+import { clColor, clCommand, clConfig, clFilter, clText, clToken, clUpdate, clUtil } from '@commercelayer/cli-core'
+import * as cliux from '@commercelayer/cli-ux'
+import type { CommerceLayerClient, QueryParams, QueryParamsRetrieve, ResourceId, ResourceType, ResourceTypeLock } from '@commercelayer/sdk'
 import commercelayer, { CommerceLayerStatic } from '@commercelayer/sdk'
-import type { ResourceId, ResourceType, CommerceLayerClient, QueryParams, QueryParamsRetrieve, ResourceTypeLock } from '@commercelayer/sdk'
-import { availableLanguages, buildCommand, getLanguageArg, languageInfo, promptLanguage, type RequestData } from './lang'
-import { clToken, clUpdate, clColor, clUtil, clConfig, clCommand, clFilter, clText } from '@commercelayer/cli-core'
-import type { KeyValRel, KeyValObj, KeyValArray, KeyValString, KeyValSort, ResAttributes, KeyVal } from '@commercelayer/cli-core'
-import { aliasExists, checkAlias, type CommandParams, loadCommandData, type ResourceOperation, saveCommandData } from './commands'
+import { Args, Command, type Config, Flags } from '@oclif/core'
 import type { CommandError } from '@oclif/core/lib/interfaces'
-import { lastResources, type LastResources } from './last'
+import { aliasExists, type CommandParams, checkAlias, loadCommandData, type ResourceOperation, saveCommandData } from './commands'
+import { exportCsv } from './csv'
+import { availableLanguages, buildCommand, getLanguageArg, languageInfo, promptLanguage, type RequestData } from './lang'
+import { type LastResources, lastResources } from './last'
+import { exportOutput, formatOutput } from './output'
+import { type ApiResource, findResource } from './util/resources'
 
 
 
@@ -29,14 +30,14 @@ export abstract class BaseCommand extends Command {
       description: 'the slug of your organization',
       required: true,
       env: 'CL_CLI_ORGANIZATION',
-      hidden: true,
+      hidden: true
     }),
     domain: Flags.string({
       char: 'd',
       required: false,
       hidden: true,
       dependsOn: ['organization'],
-      env: 'CL_CLI_DOMAIN',
+      env: 'CL_CLI_DOMAIN'
     }),
     accessToken: Flags.string({
       hidden: true,
@@ -63,7 +64,12 @@ export abstract class BaseCommand extends Command {
   }
 
 
-  printError(error: any, flags?: any, args?: any): void {
+  protected printOutput(output: any, flags: any | undefined): void {
+    if (output && !flags['headers-only']) this.log(formatOutput(output, flags))
+  }
+
+
+  protected printError(error: any, flags?: any, args?: any): void {
 
     let err = error
 
@@ -88,13 +94,61 @@ export abstract class BaseCommand extends Command {
   }
 
 
-  checkResource(res: string, { required = true, singular = false } = {}): ApiResource {
+  protected checkResource(res: string, { required = true, singular = false } = {}): ApiResource {
     if (!res && required) this.error('Resource type not defined')
     const resource = findResource(res, { singular })
     if (resource === undefined) this.error(`Invalid resource ${clColor.style.error(res)}`,
       { suggestions: [`Execute command ${clColor.style.command('resources')} to get a list of all available CLI resources`] }
     )
     return resource
+  }
+
+
+  protected checkResourceId(resource: string, resourceId?: string, required = true): {
+    res: string,
+    id?: string,
+    singleton: boolean
+  } {
+
+    let res = resource
+    let id = resourceId
+
+    const si = res.indexOf('/')
+    if (si >= 0) {
+      const rt = res.split('/')
+      if (id && rt[1]) this.error(`Double definition of resource id: [${res}, ${id}]`,
+        { suggestions: [`Define resource id as command argument (${clColor.italic(id)}) or as part of the resource itself (${clColor.italic(res)}) but not both`] }
+      )
+      else id = rt[1]
+      res = rt[0]
+    }
+
+    const res_ = findResource(res, { singular: true })
+    const singleton = res_?.singleton || false
+
+    if (id) {
+      if (singleton) this.error(`Singleton resource ${clColor.api.resource(res)} does not require id`)
+      if (id.includes('/')) this.error(`Invalid resource id: ${clColor.msg.error(id)}`)
+    } else if (required && !singleton) this.error('Resource id not defined')
+
+    return {
+      res,
+      id,
+      singleton,
+    }
+
+  }
+
+
+  protected checkOperation(sdk: any, name: string, attributes?: ResAttributes): boolean {
+    if (!sdk[name]) {
+      // resource attributes reference, reference_origin and metadata are always updatable
+      if ((name === 'update') && attributes) {
+        if (!Object.keys(attributes).some(attr => !['reference', 'reference_origin', 'metadata'].includes(attr))) return true
+      }
+      this.error(`Operation not supported for resource ${clColor.api.resource(sdk.type())}: ${clColor.msg.error(name)}`)
+    }
+    return true
   }
 
 
@@ -211,43 +265,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
 
   // -- CUSTOM METHODS -- //
 
-  checkResourceId(resource: string, resourceId?: string, required = true): {
-    res: string,
-    id?: string,
-    singleton: boolean
-  } {
-
-    let res = resource
-    let id = resourceId
-
-    const si = res.indexOf('/')
-    if (si >= 0) {
-      const rt = res.split('/')
-      if (id && rt[1]) this.error(`Double definition of resource id: [${res}, ${id}]`,
-        { suggestions: [`Define resource id as command argument (${clColor.italic(id)}) or as part of the resource itself (${clColor.italic(res)}) but not both`] }
-      )
-      else id = rt[1]
-      res = rt[0]
-    }
-
-    const res_ = findResource(res, { singular: true })
-    const singleton = res_?.singleton || false
-
-    if (id) {
-      if (singleton) this.error(`Singleton resource ${clColor.api.resource(res)} does not require id`)
-      if (id.includes('/')) this.error(`Invalid resource id: ${clColor.msg.error(id)}`)
-    } else if (required && !singleton) this.error('Resource id not defined')
-
-    return {
-      res,
-      id,
-      singleton,
-    }
-
-  }
-
-
-  checkTag(resource: string): boolean {
+  protected checkTag(resource: string): boolean {
     if (!clConfig.tags.taggable_resources.includes(resource)) {
       this.error(`Resource ${clColor.msg.error(resource)} not taggable`, {
         suggestions: [
@@ -259,7 +277,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  tagFlag(flag: string[] | undefined): Array<string | null> {
+  protected tagFlag(flag: string[] | undefined): Array<string | null> {
 
     const values: Array<string | null> = []
 
@@ -280,13 +298,13 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  includeFlag(flag: string[] | undefined, relationships?: KeyValRel, force?: boolean): string[] {
+  protected includeFlag(flag: string[] | undefined, relationships?: KeyValRel, force?: boolean): string[] {
 
     const values: string[] = []
 
     if (flag) {
       const flagValues = flag.map(f => f.split(',').map(t => t.trim()))
-      flagValues.forEach(a => values.push(...a))
+      flagValues.forEach(a => { values.push(...a) })
       if (values.some(f => f.split('.').length > 3) && !force) this.error('Only resources within the 3rd depth level can be included')
     }
 
@@ -301,9 +319,9 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  objectFlag(flag: string[] | undefined): KeyValObj {
+  protected objectFlag(flag: string[] | undefined): ResAttributes {
 
-    const objects: KeyValObj = {}
+    const objects: ResAttributes = {}
 
     if (flag && (flag.length > 0)) {
       flag.forEach(f => {
@@ -313,6 +331,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
 
         const name = f.substring(0, slashSep)
         if (name === '') this.error(`No name defined in flag object ${f}`)
+        if (objects[name]) this.warn(`Object ${clColor.msg.error(name)} has already been defined`)
         const fields = f.substring(slashSep + 1).split(/(?<!\\),/g).map(v => v.trim())  // escape ',' in value with \\ (double back slash)
         if (fields[0].trim() === '') this.error(`No fields defined for object field ${clColor.style.attribute(name)}`)
 
@@ -330,8 +349,10 @@ export abstract class BaseQueryCommand extends BaseCommand {
 
         })
 
+        const o = clUtil.dotNotationToObject(obj)
+
         if (objects[name] === undefined) objects[name] = {}
-        objects[name] = { ...objects[name], ...obj }
+        objects[name] = { ...objects[name], ...o }
 
       })
     }
@@ -341,7 +362,22 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  fieldsFlag(flag: string[] | undefined, type: string): KeyValArray {
+  protected jsonFlag(flag: string[] | undefined, objects?: KeyValObj): ResAttributes {
+    const obj = this._keyvalFlag(flag, 'object')
+    const json: ResAttributes = {}
+    Object.entries(obj).forEach(([k, v]) => {
+      if (objects?.[k]) this.warn(`Object ${clColor.msg.warning(k)} has already been defined`)
+      try {
+        json[k] = (v === 'null') ? null : JSON.parse(v)
+      } catch (_error) {
+        this.error(`Invalid JSON value for object ${clColor.msg.error(k)}`)
+      }
+    })
+    return json
+  }
+
+
+  protected fieldsFlag(flag: string[] | undefined, type: string): KeyValArray {
 
     const fields: KeyValArray = {}
 
@@ -366,7 +402,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
 
         }
 
-        const values = val.split(',').map(v => v.trim())
+        const values = val.split(',').map(v => v.trim()).filter(v => v)
         if (values[0].trim() === '') this.error(`No fields defined for resource ${clColor.api.resource(res)}`)
 
         if (fields[res] === undefined) fields[res] = []
@@ -380,7 +416,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  whereFlag(flag: string[] | undefined): KeyValString {
+  protected whereFlag(flag: string[] | undefined): KeyValString {
 
     const wheres: KeyValString = {}
 
@@ -407,7 +443,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  sortFlag(flag: string[] | undefined): KeyValSort {
+  protected sortFlag(flag: string[] | undefined): KeyValSort {
 
     const sort: KeyValSort = {}
 
@@ -453,7 +489,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  _keyvalFlag(flag: string[] | undefined, type = 'attribute'): KeyValString {
+  protected _keyvalFlag(flag: string[] | undefined, type = 'attribute'): KeyValString {
 
     const param: KeyValString = {}
 
@@ -480,7 +516,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  attributeFlag(flag: string[] | undefined): ResAttributes {
+  protected attributeFlag(flag: string[] | undefined): ResAttributes {
     const attr = this._keyvalFlag(flag, 'attribute')
     const attributes: ResAttributes = {}
     Object.entries(attr).forEach(([k, v]) => {
@@ -490,7 +526,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  metadataFlag(flag: string[] | undefined, { fixTypes = false } = {}): KeyVal {
+  protected metadataFlag(flag: string[] | undefined, { fixTypes = false } = {}): KeyVal {
     const md = this._keyvalFlag(flag, 'metadata')
     const metadata: KeyVal = {}
     Object.keys(md).forEach(k => {
@@ -500,7 +536,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  relationshipFlag(flag: string[] | undefined, organization?: string): KeyValRel {
+  protected relationshipFlag(flag: string[] | undefined, organization?: string): KeyValRel {
 
     const relationships: KeyValRel = {}
 
@@ -523,6 +559,11 @@ export abstract class BaseQueryCommand extends BaseCommand {
         const vt = rel.split('/')
         if (vt.length === 2) {
           if ((type = vt[0]) === '') this.error('Relationship type is empty')
+          else {
+            const res = findResource(type, { singular: true })
+            if (res) type = res.api
+            else this.error(`Invalid resource type: ${clColor.msg.error(type)}`)
+          }
           if ((id = vt[1]) === '') this.error('Relationship resource id is empty')
         } else {
           id = vt[0]
@@ -552,8 +593,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-
-  extractFlag(flag: string[],): KeyValArray {
+  protected extractFlag(flag: string[],): KeyValArray {
 
     const extract: KeyValArray = {}
 
@@ -587,7 +627,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  extractObjectFields(fields: KeyValArray, obj: any): void {
+  protected extractObjectFields(fields: KeyValArray, obj: any): void {
 
     Object.entries(fields).forEach(([extObj, extFields]) => {
 
@@ -609,24 +649,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  protected checkOperation(sdk: any, name: string, attributes?: ResAttributes): boolean {
-    if (!sdk[name]) {
-      // resource attributes reference, reference_origin and metadata are always updatable
-      if ((name === 'update') && attributes) {
-        if (!Object.keys(attributes).some(attr => !['reference', 'reference_origin', 'metadata'].includes(attr))) return true
-      }
-      this.error(`Operation not supported for resource ${clColor.api.resource(sdk.type())}: ${clColor.msg.error(name)}`)
-    }
-    return true
-  }
-
-
-  printOutput(output: any, flags: any | undefined): void {
-    if (output && !flags['headers-only']) this.log(formatOutput(output, flags))
-  }
-
-
-  printHeaders(headers: any, flags: any): void {
+  protected printHeaders(headers: any, flags: any): void {
     if (headers) {
       if (flags.headers || flags['headers-only']) {
         this.log('---------- Response Headers ----------')
@@ -638,7 +661,7 @@ export abstract class BaseQueryCommand extends BaseCommand {
   }
 
 
-  saveOutput(output: any, flags: any): void {
+  protected saveOutput(output: any, flags: any): void {
 
     try {
 
@@ -789,4 +812,4 @@ export default abstract class extends BaseQueryCommand {
 
 
 
-export { Flags, Args, cliux }
+export { Args, cliux, Flags }

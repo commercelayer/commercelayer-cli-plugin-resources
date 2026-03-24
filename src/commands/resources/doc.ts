@@ -1,7 +1,7 @@
-import { Command, Flags, Args } from '@oclif/core'
-import { findResource } from '../../util/resources'
 import { clColor, clConfig } from '@commercelayer/cli-core'
+import { Args, Command, Flags } from '@oclif/core'
 import open from 'open'
+import { findResource } from '../../util/resources'
 
 
 export default class ResourcesDoc extends Command {
@@ -13,7 +13,7 @@ export default class ResourcesDoc extends Command {
   static examples = [
     '$ commercelayer resources:doc customers',
     '$ cl res:doc customers',
-    '$ cl doc customers -p create',
+    '$ cl doc customers -p create'
   ]
 
   static flags = {
@@ -21,12 +21,12 @@ export default class ResourcesDoc extends Command {
       char: 'p',
       description: 'the doc page you want to access',
       options: ['object', 'create', 'retrieve', 'list', 'update', 'delete'],
-      required: false,
-    }),
+      required: false
+    })
   }
 
   static args = {
-    resource: Args.string({ name: 'resource', required: true, description: 'the resource for which you want to access the online documentation' }),
+    resource: Args.string({ name: 'resource', required: true, description: 'the resource for which you want to access the online documentation' })
   }
 
 

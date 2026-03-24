@@ -1,5 +1,5 @@
-import { type CommerceLayerClient, CommerceLayerStatic, type RequestObj } from '@commercelayer/sdk'
 import { clText, type KeyValString } from '@commercelayer/cli-core'
+import { type CommerceLayerClient, CommerceLayerStatic, type RequestObj } from '@commercelayer/sdk'
 
 
 type RequestData = {
@@ -41,7 +41,7 @@ const addRequestReader = (cl: CommerceLayerClient, interrupt = true): RequestRea
 
   const reader: RequestReader = {
     id: -1,
-    request: { baseUrl: '', path: '/', method: 'get', headers: {} },
+    request: { baseUrl: '', path: '/', method: 'get', headers: {} }
   }
 
   function requestInterceptor(request: RequestObj): RequestObj {
@@ -76,8 +76,8 @@ const isRequestInterrupted = (error: unknown): boolean => {
 }
 
 
+export type { OperationData, RequestData, RequestReader }
 export { addRequestReader, isRequestInterrupted }
-export type { RequestReader, RequestData, OperationData }
 
 
 export const getMethod = (request: RequestData): string => {
@@ -98,9 +98,9 @@ export const getFullUrl = (request: RequestData): string => {
 
 
 export const getResource = (request: RequestData): string => {
-  const slashIdx = request.path.indexOf('/')
-  if (slashIdx < 0) return request.path
-  return request.path.substring(0, slashIdx)
+  const match = request.path.match(/\/api\/[a-z_]*/g)
+  const res = (match ? match[0] : request.path).replace('/api/', '')
+  return res
 }
 
 

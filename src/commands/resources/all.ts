@@ -1,11 +1,23 @@
 
-import Command, { Flags } from '../../base'
-import { clApi, clToken, clColor, clUtil, clCommand, clConfig } from '@commercelayer/cli-core'
-import type { CommerceLayerClient, QueryParamsList, ListResponse, Resource, QueryPageSize } from '@commercelayer/sdk'
-import type { ArgOutput, FlagOutput, Input } from '@oclif/core/lib/interfaces/parser'
+import { clApi, clColor, clCommand, clConfig, clToken, clUtil } from '@commercelayer/cli-core'
+import type { CommerceLayerClient, ListResponse, QueryPageSize, QueryParamsList, Resource } from '@commercelayer/sdk'
 import notifier from 'node-notifier'
-import  cliProgress from 'cli-progress'
-import cliux from '@commercelayer/cli-ux'
+import Command, { cliux, Flags } from '../../base'
+
+/*
+import { execSync } from 'child_process'
+
+// All'inizio del run()
+// this.config.windows
+// this.config.platform
+if (process.platform === 'win32') {
+  process.stdout.setDefaultEncoding('utf8')
+  process.stderr.setDefaultEncoding('utf8')
+  try {
+    execSync('chcp 65001', { stdio: 'ignore' }) // forza UTF-8 in PowerShell
+  } catch {}
+}
+*/
 
 
 // const maxPagesWarning = 1000
@@ -43,7 +55,7 @@ export default class ResourcesAll extends Command {
   static examples = [
     '$ commercelayer resources:all customers -f id,email,customer_group -i customer_group -s updated_at',
     '$ cl res:all customers -i customer_group -f customer_group -f customer_groups/name -w customer_group_name_eq="GROUP NAME"',
-    '$ cl all customers -s -created_at --json',
+    '$ cl all customers -s -created_at --json'
   ]
 
   static flags = {
@@ -51,29 +63,29 @@ export default class ResourcesAll extends Command {
     where: Flags.string({
       char: 'w',
       multiple: true,
-      description: 'comma separated list of query filters',
+      description: 'comma separated list of query filters'
     }),
     sort: Flags.string({
       char: 's',
       description: 'define results ordering',
-      multiple: true,
+      multiple: true
     }),
     save: Flags.string({
       char: 'x',
       description: 'save command output to file',
       multiple: false,
-      exclusive: ['save-path'],
+      exclusive: ['save-path']
     }),
     'save-path': Flags.string({
       char: 'X',
       description: 'save command output to file and create missing path directories',
       multiple: false,
-      exclusive: ['save'],
+      exclusive: ['save']
     }),
     notify: Flags.boolean({
       char: 'N',
       description: 'force system notification when export has finished',
-      hidden: true,
+      hidden: true
     }),
     clientId: Flags.string({
       // name: 'clientId',
@@ -81,49 +93,49 @@ export default class ResourcesAll extends Command {
       description: 'organization client_id',
       hidden: true,
       required: false,
-      env: 'CL_CLI_CLIENT_ID',
+      env: 'CL_CLI_CLIENT_ID'
     }),
     clientSecret: Flags.string({
       // char: 's',
       description: 'organization client_secret',
       hidden: true,
       required: false,
-      env: 'CL_CLI_CLIENT_SECRET',
+      env: 'CL_CLI_CLIENT_SECRET'
     }),
     csv: Flags.boolean({
       char: 'C',
       description: 'export fields in csv format',
       exclusive: ['raw', 'json'],
-      dependsOn: ['fields'],
+      dependsOn: ['fields']
     }),
     delimiter: Flags.string({
       char: 'D',
       // eslint-disable-next-line quotes
       description: `the delimiter character to use in the CSV output file (one of ',', ';', '|', TAB)`,
       options: [',', ';', '|', 'TAB'],
-      dependsOn: ['csv'],
+      dependsOn: ['csv']
     }),
     header: Flags.string({
       char: 'H',
       description: 'rename column headers defining a comma-separated list of values field:"renamed title"',
       dependsOn: ['csv'],
-      multiple: true,
+      multiple: true
     }),
     blind: Flags.boolean({
       char: 'b',
-      description: 'execute in blind mode without prompt and progress bar',
+      description: 'execute in blind mode without prompt and progress bar'
     }),
     extract: Flags.string({
       char: 'e',
       description: 'extract subfields from object attributes',
       multiple: true,
-      exclusive: ['raw'],
+      exclusive: ['raw']
     }),
     timeout: Flags.integer({
       char: 'T',
       description: `set request timeout in milliseconds [${requestTimeout.min} - ${requestTimeout.max}]`,
-      hidden: true,
-    }),
+      hidden: true
+    })
   }
 
 
@@ -137,7 +149,7 @@ export default class ResourcesAll extends Command {
 
     if (((jwtData.exp - securityInterval) * 1000) <= Date.now()) {
 
-      await clUtil.sleep((securityInterval + 1) * 1000)
+      await cliux.wait((securityInterval + 1) * 1000)
 
       const organization = flags.organization
       const domain = flags.domain
@@ -165,7 +177,7 @@ export default class ResourcesAll extends Command {
 
   async parse(c: any): Promise<any> {
 		clCommand.fixDashedFlagValue(this.argv, c.flags.clientId)
-		const parsed = await super.parse(c as Input<FlagOutput, FlagOutput, ArgOutput>)
+		const parsed = await super.parse(c)
 		clCommand.fixDashedFlagValue(this.argv, c.flags.clientId, 'i', parsed)
 		return parsed
 	}
@@ -194,7 +206,7 @@ export default class ResourcesAll extends Command {
     // Sort flags
     const sort = this.sortFlag(flags.sort as string[])
 
-    const timeout = flags.timeout || 5000
+    const timeout = flags.timeout
     if (timeout && ((timeout < requestTimeout.min) || (timeout > requestTimeout.max)))
       this.error(`Invalid timeout: ${clColor.style.error(String(timeout))}. Timeout value must be in range [${requestTimeout.min} - ${requestTimeout.max}]`)
 
@@ -224,7 +236,7 @@ export default class ResourcesAll extends Command {
 
       const itemsDesc = resource.api.replace(/_/g, ' ')
 
-      const progressBar = blindMode ? blindProgressBar : new cliProgress.SingleBar({
+      const progressBar = blindMode ? blindProgressBar : cliux.progress({
         format: `Fetching ${itemsDesc} ... | ${clColor.greenBright('{bar}')} | ${clColor.yellowBright('{percentage}%')} | {value}/{total} | {duration_formatted} | {eta_formatted}`,
         barCompleteChar: '\u2588',
         barIncompleteChar: '\u2591',

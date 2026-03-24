@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import type { ApiResource } from '../resources'
-import { CommerceLayerStatic, type ResourceTypeLock } from '@commercelayer/sdk'
-import { join } from 'node:path'
 import { writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { clText } from '@commercelayer/cli-core'
+import { CommerceLayerStatic, type ResourceTypeLock } from '@commercelayer/sdk'
+import type { ApiResource } from '../resources'
 
 const resUrl = 'https://core.commercelayer.io/api/public/resources'
 const resFile = join(__dirname, 'schema.json')
@@ -12,14 +12,14 @@ const resFile = join(__dirname, 'schema.json')
 
 const getResourcesJson = async (): Promise<any> => {
 
-	let resources
+	let resources: any
 
 	try {
 		console.log(`Loading resources from remote url ${resUrl} ...`)
 		const response = await fetch(resUrl)
 		resources = await response.json()
 		writeFileSync(resFile, resources, { encoding: 'utf-8' })
-	} catch (error) {
+	} catch (_error) {
 		console.log('Error loading resources from ' + resUrl)
 		resources = undefined
 	}
@@ -27,18 +27,13 @@ const getResourcesJson = async (): Promise<any> => {
 	if (!resources) try {
 		console.log(`Loading resources from local file ${resFile} ...`)
 		resources = require(resFile)
-	} catch (error) {
+	} catch (_error) {
 		console.log('Error loading resources from ' + resFile)
 		resources = undefined
 	}
 
 	return resources
 
-}
-
-
-const isSingleton = (res: string): boolean => {
-	return (clText.singularize(res) === res)
 }
 
 
@@ -51,9 +46,10 @@ const parseResourcesSchema = async (): Promise<ApiResource[]> => {
 		const resList = resJson.data.map((r: { id: string; attributes: { singleton: boolean } }) => {
 			const item = {
 				name: r.id,
+        type: clText.pluralize(r.id),
 				api: r.attributes.singleton ? r.id : clText.pluralize(r.id),
 				model: clText.camelize(r.id),
-				singleton: r.attributes.singleton,
+				singleton: r.attributes.singleton
 			}
 			return item
 		})
@@ -70,12 +66,14 @@ const parseResourcesSchema = async (): Promise<ApiResource[]> => {
 const parseResourcesSdk = async (): Promise<ApiResource[]> => {
 
 	const resList = CommerceLayerStatic.resources().map(r => {
-		const singular = clText.singularize(r)
+    const res = r as ResourceTypeLock
+		const singular = clText.singularize(res)
 		const item = {
 			name: singular,
-			api: r as ResourceTypeLock,
+      type: res,
+			api: CommerceLayerStatic.isSingleton(res)? clText.singularize(res) : res,
 			model: clText.camelize(singular),
-			singleton: isSingleton(r),
+			singleton: CommerceLayerStatic.isSingleton(res)
 		}
 		return item
 	})
@@ -98,7 +96,7 @@ const exportResources = async ({ source = 'sdk', variable = false, name = 'resou
 
 	const resLines = resources.map(res => {
 		let item = `${tab ? '\t' : ''}{ `
-		item += `name: '${res.name}', api: '${res.api}', model: '${res.model}'`
+		item += `name: '${res.name}', type: '${res.type}', api: '${res.api}', model: '${res.model}'`
 		if (res.singleton) item += ', singleton: true'
 		item += ' },'
 		return item

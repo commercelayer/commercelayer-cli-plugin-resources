@@ -1,8 +1,8 @@
-import Command, { Flags, Args, FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS } from '../../base'
-import { clApi, clColor } from '@commercelayer/cli-core'
+import { clApi, clColor, clUtil } from '@commercelayer/cli-core'
 import type { CommerceLayerClient, QueryParamsRetrieve } from '@commercelayer/sdk'
-import { addRequestReader, isRequestInterrupted } from '../../lang'
+import Command, { Args, FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS, Flags } from '../../base'
 import { mergeCommandParams } from '../../commands'
+import { addRequestReader, isRequestInterrupted } from '../../lang'
 
 
 const OPERATION = 'update'
@@ -29,35 +29,40 @@ export default class ResourcesUpdate extends Command {
     attribute: Flags.string({
       char: 'a',
       description: 'define a resource attribute',
-      multiple: true,
+      multiple: true
     }),
     object: Flags.string({
       char: 'O',
       description: 'define a resource object attribute',
-      multiple: true,
+      multiple: true
+    }),
+    'json-object': Flags.string({
+      char: 'J',
+      description: 'define a resource object attribute in JSON format (value enclosed in single quotes)',
+      multiple: true
     }),
     relationship: Flags.string({
       char: 'r',
       description: 'define a relationship with another resource',
-      multiple: true,
+      multiple: true
     }),
     metadata: Flags.string({
       char: 'm',
       description: 'define a metadata attribute and merge it with the metadata already present in the remote resource',
       multiple: true,
-      exclusive: ['metadata-replace'],
+      exclusive: ['metadata-replace']
     }),
     'metadata-replace': Flags.string({
       char: 'M',
       description: 'define a metadata attribute and replace every item already present in the remote resource',
       multiple: true,
-      exclusive: ['metadata'],
+      exclusive: ['metadata']
     }),
     data: Flags.string({
       char: 'D',
       description: 'the data file to use as request body',
       multiple: false,
-      exclusive: ['attribute', 'relationship', 'metadata', 'metadata-replace', 'doc', FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS],
+      exclusive: ['attribute', 'relationship', 'metadata', 'metadata-replace', 'doc', 'object', 'json-object', FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS]
     }),
     tags: Flags.string({
       char: 't',
@@ -68,7 +73,7 @@ export default class ResourcesUpdate extends Command {
 
   static args = {
     ...Command.args,
-    id: Args.string({ name: 'id', description: 'id of the resource to update', required: false }),
+    id: Args.string({ name: 'id', description: 'id of the resource to update', required: false })
   }
 
 
@@ -89,17 +94,30 @@ export default class ResourcesUpdate extends Command {
     // Raw request
     if (flags.data) {
       try {
+
         const baseUrl = clApi.baseURL('core', flags.organization, flags.domain)
         const accessToken = flags.accessToken
-        const rawRes = await clApi.request.raw({ operation: clApi.Operation.Update, baseUrl, accessToken, resource: resource.api }, clApi.request.readDataFile(flags.data), id)
+        const dataPath = clUtil.specialFolder(flags.data)
+
+        const rawData = clApi.request.readDataFile(dataPath)
+
+        if (!rawData?.data) this.error('Empty data file')
+        if (!rawData.data.type) rawData.data.type = resource.api
+        if (!rawData.data.id) rawData.data.id = id
+
+        const rawRes = await clApi.request.raw({ operation: clApi.Operation.Update, baseUrl, accessToken, resource: resource.api }, rawData, id)
+
         const out = flags.raw ? rawRes : clApi.response.denormalize(rawRes)
         this.printOutput(out, flags)
-        this.log(`\n${clColor.style.success('Successfully')} updated resource of type ${clColor.style.resource(resource.api)} with id ${clColor.style.id(rawRes.id)}\n`)
+        this.log(`\n${clColor.style.success('Successfully')} updated resource of type ${clColor.style.resource(resource.api)} with id ${clColor.style.id(rawRes.data.id)}\n`)
+
         return out
+
       } catch (error) {
         this.printError(error)
       }
     }
+
 
     const cl = this.initCommerceLayer(flags)
 
@@ -107,6 +125,10 @@ export default class ResourcesUpdate extends Command {
     const attributes = this.attributeFlag(flags.attribute)
     // Objects flags
     const objects = this.objectFlag(flags.object)
+    if (flags['json-object']) {
+      const json = this.jsonFlag(flags['json-object'], objects)
+      Object.assign(objects, json)
+    }
     // Relationships flags
     const relationships = this.relationshipFlag(flags.relationship, flags.organization)
     // Metadata flags
@@ -191,7 +213,7 @@ export default class ResourcesUpdate extends Command {
 
 
       // Save command arguments
-      if (saveCmd) this.saveParams(saveCmd, { type: resource.api }, OPERATION, params)
+      if (saveCmd) this.saveParams(saveCmd, { type: resource.type }, OPERATION, params)
 
 
       return out

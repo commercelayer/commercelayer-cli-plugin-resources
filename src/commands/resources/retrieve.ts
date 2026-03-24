@@ -1,7 +1,7 @@
-import Command, { Flags, Args, FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS } from '../../base'
 import type { CommerceLayerClient, QueryParamsRetrieve } from '@commercelayer/sdk'
-import { addRequestReader, isRequestInterrupted } from '../../lang'
+import Command, { Args, FLAG_LOAD_PARAMS, FLAG_SAVE_PARAMS, Flags } from '../../base'
 import { mergeCommandParams } from '../../commands'
+import { addRequestReader, isRequestInterrupted } from '../../lang'
 
 
 const OPERATION = 'retrieve'
@@ -110,7 +110,7 @@ export default class ResourcesRetrieve extends Command {
       // Save command output
       if (flags.save || flags['save-path']) this.saveOutput(out, flags)
       // Save command arguments
-      if (saveCmd) this.saveParams(saveCmd, { type: resource.api, id }, OPERATION, params)
+      if (saveCmd) this.saveParams(saveCmd, { type: resource.type, id }, OPERATION, params)
 
 
       return out

@@ -1,12 +1,12 @@
+import { clApi, clColor, clText } from '@commercelayer/cli-core'
 import type { CommerceLayerClient } from '@commercelayer/sdk'
 import Command, { BaseCommand } from '../../base'
-import { clApi, clColor, clText } from '@commercelayer/cli-core'
 
 
 
 export default class ResourcesLast extends BaseCommand {
 
-  static description = 'show the last id of a resource type'
+  static description = 'show the last used id of a resource type'
 
   static aliases = ['last', 'res:last']
 
@@ -34,7 +34,7 @@ export default class ResourcesLast extends BaseCommand {
 
     try {
 
-      const last = this.lastResources(flags.organization)[resource.api]
+      const last = this.lastResources(flags.organization)[resource.type]
 
       let id = clColor.dim('none')
       let label = ''
@@ -53,7 +53,7 @@ export default class ResourcesLast extends BaseCommand {
           for (const f of fields) {
             if (f in res) {
               const v = res[f]
-              const value = v?.includes(' ') ? `'${v}'` : v
+              const value = (v && String(v).includes(' ')) ? `'${v}'` : v
               if (value) {
                 label = `${clText.capitalize(clApi.humanizeResource(resource.name))} ${f}: ${clColor.cli.value(value)}`
                 break
