@@ -1,8 +1,8 @@
 import { clColor, clConfig, clUtil } from '@commercelayer/cli-core'
-import * as cliux from '@commercelayer/cli-ux'
-import { Command, Flags } from '@oclif/core'
-import type { CommandError } from '@oclif/core/lib/interfaces'
+import cliux from '@commercelayer/cli-ux'
+import { Command, Flags, type Interfaces } from '@oclif/core'
 import { resourceList } from '../../util/resources'
+
 
 
 export default class ResourcesIndex extends Command {
@@ -45,7 +45,7 @@ export default class ResourcesIndex extends Command {
 
 	async catch(error: any): Promise<any> {
 		if ((error.code === 'EEXIT') && (error.message === 'EEXIT: 0')) return
-		return await super.catch(error as CommandError)
+		return await super.catch(error as Interfaces.CommandError)
 	}
 
 }

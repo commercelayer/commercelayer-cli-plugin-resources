@@ -1,13 +1,13 @@
 {
   "name": "@commercelayer/cli-plugin-resources",
   "description": "Commerce Layer CLI Resources plugin",
-  "version": "6.17.2",
+  "version": "7.0.0-oclif4.1",
   "author": "Pierluigi Viti <pierluigi@commercelayer.io>",
   "homepage": "https://github.com/commercelayer/commercelayer-cli-plugin-resources",
   "repository": "commercelayer/commercelayer-cli-plugin-resources",
   "bugs": "https://github.com/commercelayer/commercelayer-cli-plugin-resources/issues",
   "engines": {
-    "node": ">=20.18.1"
+    "node": ">=22"
   },
   "files": [
     "/bin/run.*",
@@ -59,13 +59,14 @@
   },
   "types": "lib/index.d.ts",
   "devDependencies": {
-    "@biomejs/biome": "^2.4.11",
-    "@commercelayer/cli-dev": "^3.1.1",
-    "@oclif/plugin-help": "^6.2.44",
-    "@oclif/test": "^3.2.15",
+    "@biomejs/biome": "^2.4.14",
+    "@commercelayer/cli-dev": "oclif4",
+    "@oclif/plugin-help": "^6.2.46",
+    "@oclif/test": "^4.1.18",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/chai": "^5.2.3",
+    "@types/cli-progress": "^3.11.6",
     "@types/inquirer": "^8.2.12",
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.6.0",
@@ -76,13 +77,13 @@
     "oclif": "^4.23.0",
     "semantic-release": "^25.0.3",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@commercelayer/cli-core": "^5.11.0",
-    "@commercelayer/cli-ux": "^1.2.0",
-    "@commercelayer/sdk": "^6.56.0",
-    "@oclif/core": "^3.27.0",
+    "@commercelayer/cli-core": "oclif4",
+    "@commercelayer/cli-ux": "oclif4",
+    "@commercelayer/sdk": "^6.57.0",
+    "@oclif/core": "^4.11.0",
     "inquirer": "^8.2.7",
     "json-2-csv": "^3.20.0",
     "node-notifier": "^10.0.1",
