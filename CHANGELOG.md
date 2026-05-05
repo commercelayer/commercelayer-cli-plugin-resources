@@ -1,3 +1,22 @@
+# [7.0.0-oclif4.1](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.17.2...v7.0.0-oclif4.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* fix cliux ([00aaf18](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/00aaf18e7e967461f25b597a532eb2fd3a6ab170))
+* fix release scripts ([831cea4](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/831cea4c2c0f8d4abfaace83b08dd37db052f79d))
+
+
+### Features
+
+* migrate to oclif/core vd and oclif/test v4 ([1b67f6b](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/1b67f6b6e0ced37be016df9d009fbf59d018a1c8))
+* upgrade to oclif 4 and add biome ([8f0a8d6](https://github.com/commercelayer/commercelayer-cli-plugin-resources/commit/8f0a8d64a954fe727af9a5b39f322f3a94a5018b))
+
+
+### BREAKING CHANGES
+
+* upgrade to oclif 4 and add biome
+
 ## [6.17.2](https://github.com/commercelayer/commercelayer-cli-plugin-resources/compare/v6.17.1...v6.17.2) (2026-04-13)
 
 
