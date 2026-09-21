@@ -3,7 +3,7 @@ import type { KeyVal, KeyValArray, KeyValObj, KeyValRel, KeyValSort, KeyValStrin
 import { clColor, clCommand, clConfig, clFilter, clText, clToken, clUpdate, clUtil } from '@commercelayer/cli-core'
 import * as cliux from '@commercelayer/cli-ux'
 import type { CommerceLayerClient, QueryParams, QueryParamsRetrieve, ResourceId, ResourceType, ResourceTypeLock } from '@commercelayer/sdk'
-import commercelayer, { CommerceLayerStatic } from '@commercelayer/sdk'
+import { CommerceLayerStatic, CommerceLayer as commercelayer } from '@commercelayer/sdk'
 import { Args, Command, type Config, Flags } from '@oclif/core'
 import type { CommandError } from '@oclif/core/lib/interfaces'
 import { aliasExists, type CommandParams, checkAlias, loadCommandData, type ResourceOperation, saveCommandData } from './commands'
@@ -55,7 +55,7 @@ export abstract class BaseCommand extends Command {
     const userAgent = clUtil.userAgent(this.config)
 
 
-    const cl = commercelayer({ organization, domain, accessToken, userAgent, ...options })
+    const cl = commercelayer({ apiVersion: "2026-05", organization, domain, accessToken, userAgent, ...options })
 
     if ('cl' in this) this.cl = cl
 

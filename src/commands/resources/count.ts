@@ -41,7 +41,7 @@ export default class ResourcesCount extends BaseCommand {
     const accessToken = flags.accessToken
 
 
-    const cl = CommerceLayer({ organization, domain, accessToken, userAgent: clUtil.userAgent(this.config), timeout: 20_000 })
+    const cl = CommerceLayer({ apiVersion: "2026-05", organization, domain, accessToken, userAgent: clUtil.userAgent(this.config), timeout: 20_000 })
     const resSdk: any = cl[resource.api as keyof CommerceLayerClient]
     this.checkOperation(resSdk)
 
