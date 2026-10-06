@@ -81,7 +81,7 @@
   "dependencies": {
     "@commercelayer/cli-core": "^5.11.4",
     "@commercelayer/cli-ux": "^1.2.4",
-    "@commercelayer/sdk": "https://pkg.pr.new/commercelayer/commercelayer-sdk/@commercelayer/sdk@5259929",
+    "@commercelayer/sdk": "^8.0.0",
     "@oclif/core": "^3.27.0",
     "inquirer": "^8.2.7",
     "json-2-csv": "^5.6.0",

@@ -10,3 +10,8 @@ overrides:
   serialize-javascript@<7.0.5: ^7.1.0
   # jsdiff DoS in parsePatch/applyPatch - mocha pins diff ^7.0.0, sinon pins ^5.0.0
   diff@<8.0.3: ^8.0.4
+
+# SDK 8.0.0, released on 2026-10-06, within pnpm's default minimumReleaseAge
+# (1 day) when adopted: first-party package, installed right away.
+minimumReleaseAgeExclude:
+  - '@commercelayer/sdk@8.0.0'
